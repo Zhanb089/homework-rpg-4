@@ -2,7 +2,6 @@ package com.narxoz.rpg.battle;
 
 import com.narxoz.rpg.bridge.Skill;
 import com.narxoz.rpg.composite.CombatNode;
-
 import java.util.Random;
 
 public class RaidEngine {
@@ -13,21 +12,36 @@ public class RaidEngine {
         return this;
     }
 
-    public RaidResult runRaid(CombatNode teamA, CombatNode teamB, Skill teamASkill, Skill teamBSkill) {
-        // TODO: Validate inputs (null checks, alive checks, required skills).
-        // TODO: Implement round-based simulation:
-        // 1) Team A casts on Team B
-        // 2) Team B casts on Team A (if still alive)
-        // 3) Track rounds and log each step
-        // 4) Stop when one team is defeated (or max rounds reached)
-        //
-        // Optional extension:
-        // Use random for critical strikes or other deterministic events.
-        // Example: boolean critA = random.nextInt(100) < 10;
+    public RaidResult runRaid(CombatNode teamA, CombatNode teamB, Skill skillA, Skill skillB) {
         RaidResult result = new RaidResult();
-        result.setRounds(0);
-        result.setWinner("TBD");
-        result.addLine("TODO: implement raid simulation");
+        
+        if (teamA == null || teamB == null || !teamA.isAlive() || !teamB.isAlive()) {
+            result.setWinner("None");
+            result.addLine("Battle cannot start. Teams are missing or dead.");
+            return result;
+        }
+
+        int round = 1;
+        result.addLine("Raid Start: " + teamA.getName() + " vs " + teamB.getName());
+
+        while (teamA.isAlive() && teamB.isAlive() && round <= 50) {
+            result.addLine("--- Round " + round + " ---");
+
+            result.addLine(teamA.getName() + " uses " + skillA.getSkillName());
+            skillA.cast(teamB);
+
+            if (teamB.isAlive()) {
+                result.addLine(teamB.getName() + " counters with " + skillB.getSkillName());
+                skillB.cast(teamA);
+            }
+            round++;
+        }
+
+        result.setRounds(round - 1);
+        String winner = teamA.isAlive() ? teamA.getName() : (teamB.isAlive() ? teamB.getName() : "Draw");
+        result.setWinner(winner);
+        result.addLine("VICTORY: " + winner);
+        
         return result;
     }
 }
