@@ -10,7 +10,7 @@ public class AreaSkill extends Skill {
     @Override
     public void cast(CombatNode target) {
         int damage = resolvedDamage();
-        System.out.println("[AOE] " + getSkillName() + " explodes on " + target.getName() + " group for " + damage + " " + getEffectName() + " damage!");
+        System.out.println(getSkillName() + " explodes on " + target.getName() + " group for " + damage + " " + getEffectName() + " damage!");
         target.takeDamage(damage);
     }
 }

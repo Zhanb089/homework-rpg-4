@@ -7,6 +7,11 @@ public class ShadowEffect implements EffectImplementor {
     }
 
     @Override
+    public void apply(int amount) {
+        System.out.println("   [Effect] Темная энергия поглощает жизненные силы цели на " + amount + " единиц!");
+    }
+
+    @Override
     public String getEffectName() {
         return "Shadow";
     }

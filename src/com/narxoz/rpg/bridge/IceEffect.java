@@ -7,6 +7,11 @@ public class IceEffect implements EffectImplementor {
     }
 
     @Override
+    public void apply(int amount) {
+        System.out.println("   [Effect] Ледяная корка сковывает цель, нанося " + amount + " урона холодом!");
+    }
+
+    @Override
     public String getEffectName() {
         return "Ice";
     }

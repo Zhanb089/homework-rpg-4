@@ -7,6 +7,11 @@ public class PhysicalEffect implements EffectImplementor {
     }
 
     @Override
+    public void apply(int amount) {
+        System.out.println("   [Effect] Прямой физический удар сокрушает защиту, нанося " + amount + " урона!");
+    }
+
+    @Override
     public String getEffectName() {
         return "Physical";
     }
